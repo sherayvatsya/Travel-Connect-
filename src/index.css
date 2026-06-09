@@ -1,0 +1,389 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --color-brand-blue: #0056fb;
+  --color-brand-blue-hover: #0046d5;
+  --color-light-bg: #f8fafc;
+  --color-dark-bg: #0b0c10;
+  
+  --color-slate-105: #f1f5f9;
+  --color-slate-205: #e2e8f0;
+  --color-slate-250: #cbd5e1;
+  --color-slate-350: #94a3b8;
+  --color-slate-405: #64748b;
+  --color-slate-450: #475569;
+  --color-slate-505: #334155;
+  --color-slate-550: #1e293b;
+  --color-slate-650: #0f172a;
+  --color-slate-655: #0f172a;
+  --color-slate-705: #020617;
+  --color-slate-805: #020617;
+  --color-slate-850: #020617;
+  --color-slate-855: #020617;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: #f8fafc;
+  color: #1e293b;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark {
+  background-color: #090a0f;
+  color: #e2e8f0;
+}
+
+/* Light / Dark Mode Card styling */
+.platform-card {
+  background-color: #ffffff;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 4px 18px -4px rgba(0, 86, 251, 0.04), 0 2px 6px -1px rgba(0, 86, 251, 0.02);
+}
+
+.dark .platform-card {
+  background-color: #11131c;
+  border-color: #1f2230;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.platform-input {
+  background-color: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  color: #1e293b;
+}
+
+.platform-input:focus {
+  border-color: #0056fb;
+  box-shadow: 0 0 0 3px rgba(0, 86, 251, 0.1);
+}
+
+.dark .platform-input {
+  background-color: #181b26;
+  border-color: #2e3347;
+  color: #e2e8f0;
+}
+
+.dark .platform-input:focus {
+  border-color: #0056fb;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 99px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Dynamic design badge styles */
+.badge-custom {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Glassmorphism panel for floating chatbot */
+.glass-chat {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+.dark .glass-chat {
+  background: rgba(17, 19, 28, 0.85);
+  border-color: rgba(46, 51, 71, 0.8);
+}
+
+/* Form switch controls */
+.pill-tab {
+  transition: all 0.2s ease-in-out;
+}
+
+/* --- LEAFLET PREMIUM STYLING --- */
+.leaflet-container {
+  background: #f8fafc !important;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+}
+
+.dark .leaflet-container {
+  background: #090a0f !important;
+}
+
+.leaflet-tooltip {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.9) !important;
+  color: #0f172a !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 14px rgba(0, 86, 251, 0.06), 0 2px 5px rgba(0, 0, 0, 0.03) !important;
+  padding: 4px 10px !important;
+}
+
+.dark .leaflet-tooltip {
+  background: rgba(15, 17, 26, 0.92) !important;
+  border-color: rgba(31, 34, 48, 0.9) !important;
+  color: #f1f5f9 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+}
+
+.leaflet-tooltip-top::before {
+  border-top-color: rgba(255, 255, 255, 0.92) !important;
+}
+
+.dark .leaflet-tooltip-top::before {
+  border-top-color: rgba(15, 17, 26, 0.92) !important;
+}
+
+.leaflet-tooltip-bottom::before {
+  border-bottom-color: rgba(255, 255, 255, 0.92) !important;
+}
+
+.dark .leaflet-tooltip-bottom::before {
+  border-bottom-color: rgba(15, 17, 26, 0.92) !important;
+}
+
+.tooltip-selected {
+  border-color: #0056fb !important;
+  color: #0056fb !important;
+}
+
+.dark .tooltip-selected {
+  color: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+}
+
+.tooltip-vehicle {
+  color: #0056fb !important;
+  border-color: #0056fb !important;
+  font-weight: 800 !important;
+}
+
+.custom-marker-div, .custom-vehicle-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Dark mode tile inversion is no longer needed since we use native CartoDB Dark Matter tiles */
+/*
+.dark .leaflet-tile {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%) !important;
+}
+*/
+
+/* Leaflet control theme overrides for dark mode */
+.dark .leaflet-bar {
+  border: 1px solid rgba(31, 34, 48, 0.9) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark .leaflet-bar a {
+  background-color: #151824 !important;
+  color: #94a3b8 !important;
+  border-bottom: 1px solid #1f2230 !important;
+  transition: all 0.2s;
+}
+
+.dark .leaflet-bar a:hover {
+  background-color: #1e2230 !important;
+  color: #ffffff !important;
+}
+
+.dark .leaflet-control-attribution {
+  background: rgba(15, 17, 26, 0.8) !important;
+  color: #64748b !important;
+}
+
+.dark .leaflet-control-attribution a {
+  color: #3b82f6 !important;
+}
+
+/* --- HIGH CONTRAST COLOR THEME OVERRIDES --- */
+
+/* Glass Panel definition */
+.glass-panel {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+}
+.dark .glass-panel {
+  background-color: #11131c;
+  border-color: #1f2230;
+}
+
+/* Card and container background theme overrides for portals and map legends */
+.p-3.bg-slate-900,
+.p-4.bg-slate-900,
+.p-5.bg-slate-900,
+.p-6.bg-slate-900,
+.bg-slate-900.p-3,
+.bg-slate-900.p-6 {
+  background-color: #ffffff !important;
+}
+
+.p-3.bg-slate-950,
+.p-4.bg-slate-950,
+.p-4.bg-slate-955,
+.p-5.bg-slate-950,
+.p-6.bg-slate-950,
+.p-6.bg-slate-950\/90,
+.bg-slate-950.p-3,
+.bg-slate-950\/90.p-6 {
+  background-color: #f8fafc !important;
+}
+
+.border-slate-800,
+.border-slate-850,
+.border-slate-800\/80,
+.border-slate-800\/50 {
+  border-color: #e2e8f0 !important;
+}
+
+/* Form element background theme overrides for portals */
+input.bg-slate-900,
+select.bg-slate-900,
+textarea.bg-slate-900 {
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+  border-color: #e2e8f0 !important;
+}
+
+.dark .p-3.bg-slate-900,
+.dark .p-4.bg-slate-900,
+.dark .p-5.bg-slate-900,
+.dark .p-6.bg-slate-900,
+.dark .bg-slate-900.p-3,
+.dark .bg-slate-900.p-6 {
+  background-color: #11131c !important;
+}
+
+.dark .p-3.bg-slate-955,
+.dark .p-3.bg-slate-950,
+.dark .p-4.bg-slate-950,
+.dark .p-5.bg-slate-950,
+.dark .p-6.bg-slate-950,
+.dark .p-6.bg-slate-955,
+.dark .p-6.bg-slate-950\/90,
+.dark .bg-slate-950.p-3,
+.dark .bg-slate-950.p-6,
+.dark .bg-slate-950\/90.p-6 {
+  background-color: #0b0c10 !important;
+}
+
+.dark .border-slate-800,
+.dark .border-slate-850,
+.dark .border-slate-800\/80,
+.dark .border-slate-800\/50 {
+  border-color: #1f2230 !important;
+}
+
+.dark input.bg-slate-900,
+.dark select.bg-slate-900,
+.dark textarea.bg-slate-900 {
+  background-color: #181b26 !important;
+  color: #e2e8f0 !important;
+  border-color: #2e3347 !important;
+}
+
+/* 1. Light Mode Text Contrast Enhancements */
+.text-slate-100,
+.text-slate-105,
+.text-slate-150,
+.text-slate-200,
+.text-slate-205,
+.text-slate-700,
+.text-slate-705,
+.text-slate-800,
+.text-slate-805,
+.text-slate-850,
+.text-slate-855,
+.text-slate-900 {
+  color: #020617 !important; /* Increase contrast of titles (slate-950) */
+}
+
+.text-slate-250,
+.text-slate-300,
+.text-slate-450,
+.text-slate-500,
+.text-slate-505,
+.text-slate-550,
+.text-slate-600 {
+  color: #27303f !important; /* Increase contrast of regular text (slate-800 equivalent) */
+}
+
+.text-slate-350,
+.text-slate-405,
+.text-slate-400 {
+  color: #475569 !important; /* Increase contrast of muted/helper text in light mode (slate-600) */
+}
+
+/* 2. Dark Mode Text Contrast Enhancements */
+.dark .text-slate-100,
+.dark .text-slate-105,
+.dark .text-slate-150,
+.dark .text-slate-200,
+.dark .text-slate-205,
+.dark .text-slate-250,
+.dark .text-slate-300 {
+  color: #cbd5e1 !important; /* Make light texts readable in dark mode */
+}
+
+.dark .text-slate-350,
+.dark .text-slate-400,
+.dark .text-slate-405,
+.dark .text-slate-450 {
+  color: #cbd5e1 !important; /* Make muted/helper text light gray (slate-300) in dark mode */
+}
+
+.dark .text-slate-500,
+.dark .text-slate-505,
+.dark .text-slate-550,
+.dark .text-slate-600,
+.dark .text-slate-700 {
+  color: #f1f5f9 !important; /* Make regular text bright slate (slate-100) in dark mode */
+}
+
+.dark .text-slate-705,
+.dark .text-slate-800,
+.dark .text-slate-805,
+.dark .text-slate-850,
+.dark .text-slate-855,
+.dark .text-slate-900 {
+  color: #ffffff !important; /* Make titles pure white in dark mode */
+}
+
+/* Ensure helper icons also stand out */
+.dark .text-slate-400 {
+  color: #cbd5e1 !important;
+}
+
+/* Ensure placeholder texts are readable */
+input::placeholder {
+  color: #64748b !important;
+}
+.dark input::placeholder {
+  color: #cbd5e1 !important;
+}
+
+
