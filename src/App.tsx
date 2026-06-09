@@ -6,7 +6,7 @@ import { OperatorPortal } from './components/OperatorPortal';
 import { AdminPortal } from './components/AdminPortal';
 
 function MainLayout() {
-  const { theme, activeRole } = useApp();
+  const { theme, activeRole, currentScreen } = useApp();
 
   // Dynamically apply dark class to document body
   useEffect(() => {
@@ -17,15 +17,17 @@ function MainLayout() {
     }
   }, [theme]);
 
+  const isFullScreen = ['splash', 'welcome', 'login'].includes(currentScreen);
+
   return (
     <div className={`min-h-screen flex flex-col transition-all duration-300 ${
-      theme === 'dark' ? 'bg-[#090a0f] text-slate-100' : 'bg-slate-50 text-slate-900'
+      theme === 'dark' ? 'bg-[#0b1220] text-slate-100' : 'bg-[#f8fafc] text-slate-900'
     }`}>
       {/* Header Bar */}
-      <Header />
+      {!isFullScreen && <Header />}
 
       {/* Main Core Platform Content */}
-      <main className="flex-1 pb-24">
+      <main className={`flex-1 ${isFullScreen ? '' : 'pb-24'}`}>
         {activeRole === 'customer' || activeRole === 'guest' ? (
           <CustomerFlow />
         ) : activeRole === 'admin' ? (
@@ -36,7 +38,7 @@ function MainLayout() {
       </main>
 
       {/* Footer bar */}
-      <Footer />
+      {!isFullScreen && <Footer />}
 
       {/* Floating Demo Assist Utilities */}
       <RoleSwitcher />
