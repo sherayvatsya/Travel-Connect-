@@ -50,6 +50,7 @@ import {
 import confetti from 'canvas-confetti';
 import { motion, AnimatePresence } from 'framer-motion';
 import travelConnectAuthBg from '../assets/travel_connect_auth_bg.png';
+import { AuthModule } from './AuthModule';
 
 // --- MAIN WRAPPER FOR CUSTOMER FLOW ---
 export const CustomerFlow: React.FC = () => {
@@ -300,23 +301,23 @@ const FloatingInput: React.FC<FloatingInputProps> = ({
     <div className="relative w-full">
       {/* Background glow on focus */}
       <div 
-        className={`absolute inset-0 rounded-2xl bg-indigo-500/5 dark:bg-indigo-500/5 blur-md transition-opacity duration-300 pointer-events-none -z-10 ${
+        className={`absolute inset-0 rounded-xl bg-blue-500/5 dark:bg-blue-500/5 blur-md transition-opacity duration-300 pointer-events-none -z-10 ${
           isFocused ? 'opacity-100' : 'opacity-0'
         }`} 
       />
       
       {/* Input container */}
       <div 
-        className={`relative flex items-center w-full rounded-2xl border transition-all duration-300 bg-white/40 dark:bg-slate-900/40 backdrop-blur-sm ${
+        className={`relative flex items-center w-full rounded-xl border transition-all duration-200 bg-white dark:bg-slate-900/70 ${
           isFocused 
-            ? 'border-indigo-500 ring-2 ring-indigo-500/20 shadow-lg shadow-indigo-500/5' 
-            : 'border-slate-200 dark:border-slate-800 hover:border-slate-350 dark:hover:border-slate-700'
+            ? 'border-blue-600 ring-3 ring-blue-600/10 shadow-sm' 
+            : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
         }`}
       >
         {icon && (
           <div 
             className={`pl-4 flex items-center justify-center transition-colors duration-300 ${
-              isFocused ? 'text-indigo-550 dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500'
+              isFocused ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400 dark:text-slate-500'
             }`}
           >
             {icon}
@@ -329,7 +330,7 @@ const FloatingInput: React.FC<FloatingInputProps> = ({
           onChange={onChange}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          className={`w-full px-4 pt-5.5 pb-1.5 text-xs text-slate-800 dark:text-slate-100 bg-transparent border-none focus:outline-none focus:ring-0 ${
+          className={`w-full px-4 pt-5.5 pb-2 text-sm font-semibold text-slate-800 dark:text-slate-100 bg-transparent border-none focus:outline-none focus:ring-0 ${
             icon ? 'pl-2' : ''
           } ${isPassword ? 'pr-10' : ''}`}
           {...props}
@@ -350,7 +351,7 @@ const FloatingInput: React.FC<FloatingInputProps> = ({
       <label 
         className={`absolute transition-all duration-300 pointer-events-none text-xs origin-left ${
           isFocused || hasValue
-            ? 'left-4 top-1 text-[10px] scale-90 text-indigo-600 dark:text-indigo-400 font-extrabold translate-y-0'
+            ? 'left-4 top-1 text-[10px] scale-90 text-blue-600 dark:text-blue-400 font-extrabold translate-y-0'
             : `${icon ? 'left-10' : 'left-4'} top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 font-semibold`
         }`}
       >
@@ -361,7 +362,7 @@ const FloatingInput: React.FC<FloatingInputProps> = ({
 };
 
 // --- SPLIT-SCREEN AUTHENTICATION MODAL (LOGIN & SIGN UP) ---
-const LoginScreen: React.FC = () => {
+const LoginScreenLegacy: React.FC = () => {
   const { theme, toggleTheme, language, setLanguage, login, registerCustomer, registerProvider, setCurrentScreen, t } = useApp();
   const [isRegister, setIsRegister] = useState(false);
   const [accountType, setAccountType] = useState<'traveler' | 'provider' | 'hotel' | 'tour'>('traveler');
@@ -435,24 +436,24 @@ const LoginScreen: React.FC = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="min-h-screen w-full flex flex-col md:grid md:grid-rows-[1fr_auto] bg-[#f8fafc] dark:bg-[#0b1220] transition-colors duration-300 relative text-slate-800 dark:text-white"
+      className="min-h-screen w-full flex flex-col md:grid md:grid-rows-[1fr_auto] bg-slate-50 dark:bg-[#0b1220] transition-colors duration-300 relative text-slate-800 dark:text-white"
     >
       {/* 2-Column Split Section */}
       <div className="md:grid md:grid-cols-[52%_48%] min-h-0 flex-1 relative">
         
         {/* Left Immersive Hero Column */}
-        <div className="relative hidden md:flex flex-col justify-between p-12 text-white overflow-hidden min-h-[600px]">
+        <div className="relative hidden md:flex flex-col justify-between p-12 text-white overflow-hidden min-h-[640px]">
           {/* Background image with parallax scale effect */}
           <motion.img 
             src={travelConnectAuthBg} 
             alt="Travel Hero Background"
-            animate={{ scale: [1, 1.05, 1], y: [0, -4, 0] }}
-            transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+            animate={{ scale: [1, 1.03, 1], y: [0, -3, 0] }}
+            transition={{ repeat: Infinity, duration: 28, ease: "linear" }}
             className="absolute inset-0 w-full h-full object-cover z-0"
           />
           
           {/* Dark blue overlay gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0c1b33]/95 via-[#0b1220]/85 to-[#1a103c]/95 mix-blend-multiply z-10" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#07111f]/95 via-[#0b1220]/88 to-[#10213d]/92 z-10" />
 
           {/* Floating route marker and animated route line */}
           <div className="absolute inset-0 pointer-events-none z-15 overflow-hidden">
@@ -482,7 +483,7 @@ const LoginScreen: React.FC = () => {
 
           {/* Brand Logo Header */}
           <div className="flex items-center gap-2.5 z-20 cursor-pointer" onClick={() => setCurrentScreen('home')}>
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#2563EB] to-[#6366F1] flex items-center justify-center text-white font-black shadow-md shadow-blue-500/20">
+            <div className="w-9 h-9 rounded-xl bg-white/12 border border-white/15 flex items-center justify-center text-white font-black shadow-md shadow-blue-500/20">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                 <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"/>
                 <circle cx="12" cy="10" r="3"/>
@@ -492,14 +493,17 @@ const LoginScreen: React.FC = () => {
           </div>
 
           {/* Center heading and feature cards */}
-          <div className="my-auto space-y-8 max-w-lg z-20 pr-6">
+          <div className="my-auto space-y-8 max-w-xl z-20 pr-6">
             <div className="space-y-4">
-              <h1 className="text-4.5xl lg:text-5xl font-black tracking-tight leading-tight">
-                Your Journey,<br />
-                <span className="bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">Connected.</span>
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-wider text-blue-100">
+                <Shield size={12} />
+                Secure travel account
+              </div>
+              <h1 className="text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+                Manage every trip from one professional dashboard.
               </h1>
-              <p className="text-sm text-slate-350 leading-relaxed font-semibold">
-                Book tickets, manage trips, and explore exclusive travel experiences with ease.
+              <p className="text-sm text-slate-200/90 leading-relaxed font-semibold max-w-md">
+                Sign in to book routes, track journeys, manage payments, and coordinate transport partners across India.
               </p>
             </div>
 
@@ -507,18 +511,18 @@ const LoginScreen: React.FC = () => {
             <div className="space-y-3.5">
               {[
                 { 
-                  title: "Smart Bookings", 
-                  desc: "Book your tickets in just a few clicks.", 
+                  title: "Verified access", 
+                  desc: "Role-based sign in for travelers and operators.", 
                   icon: <Check className="text-blue-400" size={13} strokeWidth={3} /> 
                 },
                 { 
-                  title: "Live Journey Updates", 
-                  desc: "Stay informed with real-time updates.", 
+                  title: "Live operations", 
+                  desc: "Bookings, routes, and trip status stay in sync.", 
                   icon: <Check className="text-purple-400" size={13} strokeWidth={3} /> 
                 },
                 { 
-                  title: "Secure & Reliable", 
-                  desc: "Your data and journeys are always safe with us.", 
+                  title: "Trusted payments", 
+                  desc: "Secure checkout and clear fare visibility.", 
                   icon: <Check className="text-indigo-400" size={13} strokeWidth={3} /> 
                 }
               ].map((item, i) => (
@@ -527,7 +531,7 @@ const LoginScreen: React.FC = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 * i + 0.3 }}
-                  className="flex items-start gap-4 p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300 hover:translate-x-1"
+                  className="flex items-start gap-4 p-3.5 rounded-xl bg-white/7 border border-white/10 hover:bg-white/10 transition-all duration-300 hover:translate-x-1"
                 >
                   <div className="w-6.5 h-6.5 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
                     {item.icon}
@@ -547,7 +551,7 @@ const LoginScreen: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="p-4 rounded-2xl bg-white/10 border border-white/15 backdrop-blur-md max-w-sm flex items-center gap-4 hover:bg-white/15 transition-all duration-350"
+              className="p-4 rounded-xl bg-white/10 border border-white/15 backdrop-blur-md max-w-sm flex items-center gap-4 hover:bg-white/15 transition-all duration-350"
             >
               {/* Stacked avatars */}
               <div className="flex -space-x-2.5 overflow-hidden shrink-0">
@@ -568,13 +572,13 @@ const LoginScreen: React.FC = () => {
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-extrabold text-white">4.8/5 Rating</span>
+                  <span className="text-xs font-extrabold text-white">4.8/5 customer rating</span>
                   <div className="flex text-amber-400">
                     {[...Array(5)].map((_, i) => <Star key={i} size={10} className="fill-amber-400 text-amber-400" />)}
                   </div>
                 </div>
                 <p className="text-[10px] text-slate-300 font-semibold mt-0.5">
-                  👥 2.5M+ Travelers • "Trusted by millions of travelers"
+                  2.5M+ travelers use TravelConnect for daily mobility.
                 </p>
               </div>
             </motion.div>
@@ -582,7 +586,7 @@ const LoginScreen: React.FC = () => {
         </div>
 
         {/* Right Authentication Form Column */}
-        <div className="flex flex-col justify-center items-center py-12 px-6 md:px-12 relative min-h-[600px] w-full bg-white dark:bg-[#111827]">
+        <div className="flex flex-col justify-center items-center py-12 px-6 md:px-12 relative min-h-[640px] w-full bg-white dark:bg-[#111827]">
           
           {/* Header Controls (Theme Toggle and Language Dropdown) */}
           <div className="absolute top-6 right-6 flex items-center gap-3 z-30">
@@ -611,22 +615,37 @@ const LoginScreen: React.FC = () => {
           </div>
 
           {/* Premium Center Authentication Card */}
-          <div className="max-w-md w-full z-10">
-            <div className="text-center md:text-left mb-8">
-              <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white flex items-center justify-center md:justify-start gap-2">
-                {isRegister ? 'Create Account ✨' : 'Welcome Back! 👋'}
+          <div className="max-w-md w-full z-10 rounded-2xl border border-slate-200/80 dark:border-white/8 bg-white dark:bg-[#111827] shadow-2xl shadow-slate-200/70 dark:shadow-black/25 p-6 md:p-8">
+            <div className="mb-7">
+              <div className="mb-5 flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-sm">
+                    <MapPin size={18} strokeWidth={2.8} />
+                  </div>
+                  <div>
+                    <p className="text-sm font-extrabold text-slate-900 dark:text-white">TravelConnect</p>
+                    <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Secure portal</p>
+                  </div>
+                </div>
+                <div className="hidden sm:flex items-center gap-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/20 px-3 py-1.5 text-[10px] font-extrabold text-emerald-700 dark:text-emerald-300">
+                  <Shield size={12} />
+                  Protected
+                </div>
+              </div>
+              <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white">
+                {isRegister ? 'Create your account' : 'Sign in to your account'}
               </h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 font-semibold">
-                {isRegister ? 'Register your account to begin your journey' : 'Sign in to continue your journey'}
+              <p className="text-sm text-slate-500 dark:text-slate-400 mt-2 font-semibold leading-relaxed">
+                {isRegister ? 'Set up access for travelers, operators, and partners.' : 'Access your bookings, routes, wallet, and live trip updates.'}
               </p>
             </div>
 
             {/* Form Toggle Slider Tab */}
-            <div className="relative flex p-1 mb-7 bg-slate-105 dark:bg-slate-950 border border-slate-200/50 dark:border-white/5 rounded-2xl w-full z-10 shadow-inner">
+            <div className="relative flex p-1 mb-6 bg-slate-100 dark:bg-slate-950 border border-slate-200/70 dark:border-white/5 rounded-xl w-full z-10">
               <motion.div 
                 layoutId="activeTabPill"
                 transition={{ type: "spring", stiffness: 350, damping: 28 }}
-                className="absolute top-1 bottom-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl shadow-md shadow-blue-500/20"
+                className="absolute top-1 bottom-1 bg-blue-600 rounded-lg shadow-sm"
                 style={{ 
                   width: 'calc(50% - 4px)',
                   left: isRegister ? 'calc(50% + 2px)' : '4px'
@@ -671,7 +690,7 @@ const LoginScreen: React.FC = () => {
               {isRegister && (
                 <div className="w-full">
                   <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-1.5 pl-1 tracking-wider">Account Type</label>
-                  <div className="relative flex items-center w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/40 dark:bg-slate-900/40 backdrop-blur-sm transition-all focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/20">
+                  <div className="relative flex items-center w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/70 transition-all focus-within:border-blue-600 focus-within:ring-3 focus-within:ring-blue-600/10">
                     <div className="pl-4 flex items-center justify-center text-slate-400 dark:text-slate-500">
                       <User size={14} />
                     </div>
@@ -682,7 +701,7 @@ const LoginScreen: React.FC = () => {
                         setAccountType(val);
                         setIsProvider(val !== 'traveler');
                       }}
-                      className="w-full px-4 py-3.5 pr-8 text-xs text-slate-800 dark:text-slate-200 bg-transparent border-none focus:outline-none focus:ring-0 appearance-none cursor-pointer font-bold"
+                      className="w-full px-4 py-3.5 pr-8 text-sm text-slate-800 dark:text-slate-200 bg-transparent border-none focus:outline-none focus:ring-0 appearance-none cursor-pointer font-bold"
                     >
                       <option value="traveler" className="bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200 font-semibold">Traveler</option>
                       <option value="provider" className="bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200 font-semibold">Transport Provider</option>
@@ -783,14 +802,14 @@ const LoginScreen: React.FC = () => {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
                           <label className="block text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase mb-1.5 pl-1">Vehicle Type</label>
-                          <div className="relative flex items-center w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/40 dark:bg-slate-900/40 backdrop-blur-sm transition-all focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/20">
+                          <div className="relative flex items-center w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/70 transition-all focus-within:border-blue-600 focus-within:ring-3 focus-within:ring-blue-600/10">
                             <div className="pl-4 flex items-center justify-center text-slate-400 dark:text-slate-500">
                               <Car size={14} />
                             </div>
                             <select 
                               value={vehicleType} 
                               onChange={e => setVehicleType(e.target.value as any)}
-                              className="w-full px-4 py-3.5 pr-8 text-xs text-slate-800 dark:text-slate-200 bg-transparent border-none focus:outline-none focus:ring-0 appearance-none cursor-pointer font-semibold"
+                              className="w-full px-4 py-3.5 pr-8 text-sm text-slate-800 dark:text-slate-200 bg-transparent border-none focus:outline-none focus:ring-0 appearance-none cursor-pointer font-semibold"
                             >
                               <option value="cab" className="bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-250 font-semibold">Cab / Taxi</option>
                               <option value="bus" className="bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-250 font-semibold">Bus / Coach</option>
@@ -845,9 +864,10 @@ const LoginScreen: React.FC = () => {
                 type="submit"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-extrabold text-xs rounded-2xl shadow-lg shadow-blue-500/10 hover:shadow-blue-500/25 cursor-pointer mt-4 transition-all flex items-center justify-center gap-1.5"
+                className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-sm rounded-xl shadow-lg shadow-blue-600/15 hover:shadow-blue-600/25 cursor-pointer mt-4 transition-all flex items-center justify-center gap-1.5"
               >
-                <span>{isRegister ? 'Create Account →' : 'Sign In →'}</span>
+                <span>{isRegister ? 'Create account' : 'Sign in securely'}</span>
+                <ChevronRight size={15} />
               </motion.button>
             </form>
 
@@ -867,7 +887,7 @@ const LoginScreen: React.FC = () => {
                 whileHover={{ scale: 1.02, y: -1 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setShowGoogleModal(true)}
-                className="py-3 rounded-2xl border border-slate-200 dark:border-white/8 text-[10px] font-extrabold flex items-center justify-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-900/60 hover:border-slate-350 dark:hover:border-slate-700 transition-all cursor-pointer text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900/40 shadow-sm"
+                className="py-3 rounded-xl border border-slate-200 dark:border-white/8 text-xs font-extrabold flex items-center justify-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-900/60 hover:border-slate-350 dark:hover:border-slate-700 transition-all cursor-pointer text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900/40 shadow-sm"
               >
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -882,7 +902,7 @@ const LoginScreen: React.FC = () => {
                 whileHover={{ scale: 1.02, y: -1 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setShowAppleModal(true)}
-                className="py-3 rounded-2xl border border-slate-200 dark:border-white/8 text-[10px] font-extrabold flex items-center justify-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-900/60 hover:border-slate-350 dark:hover:border-slate-700 transition-all cursor-pointer text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900/40 shadow-sm"
+                className="py-3 rounded-xl border border-slate-200 dark:border-white/8 text-xs font-extrabold flex items-center justify-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-900/60 hover:border-slate-350 dark:hover:border-slate-700 transition-all cursor-pointer text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900/40 shadow-sm"
               >
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 4.17c.66-.81 1.11-1.93.99-3.06-1 .04-2.21.67-2.93 1.49-.62.69-1.16 1.84-1.01 2.96 1.12.09 2.27-.58 2.95-1.39z"/>
@@ -892,7 +912,7 @@ const LoginScreen: React.FC = () => {
             </div>
 
             {/* Form footer link */}
-            <div className="mt-8 text-center text-xs font-bold text-slate-500 dark:text-slate-400">
+            <div className="mt-7 text-center text-xs font-bold text-slate-500 dark:text-slate-400">
               {isRegister ? (
                 <span>
                   Already have an account?{' '}
@@ -1097,6 +1117,8 @@ const LoginScreen: React.FC = () => {
     </motion.div>
   );
 };
+
+const LoginScreen: React.FC = () => <AuthModule />;
 
 // --- CUSTOMER DASHBOARD / SEARCH HOME (MATCHES IMAGE 8) ---
 const SearchHomeScreen: React.FC = () => {
@@ -1478,14 +1500,14 @@ const SearchHomeScreen: React.FC = () => {
                   <span className="w-2.5 h-2.5 rounded-full bg-[#0056fb]" />
                 </div>
                 <div className="ml-3 flex-1 text-left relative">
-                  <label className="block text-[8px] font-extrabold text-slate-450 dark:text-slate-500 uppercase tracking-wider">From</label>
+                  <label className="block text-[8px] font-extrabold text-slate-450 dark:text-slate-500 uppercase tracking-wider">{t('from')}</label>
                   <input 
                     type="text"
                     value={srcQuery}
                     onChange={(e) => handleSourceInputChange(e.target.value)}
                     onFocus={() => setSrcFocused(true)}
                     onBlur={() => setTimeout(() => setSrcFocused(false), 200)}
-                    placeholder="Search place, city, or address..."
+                    placeholder={t('search_placeholder')}
                     className="w-full bg-transparent text-xs font-bold text-slate-800 dark:text-slate-200 focus:outline-none py-0.5 border-b border-transparent focus:border-blue-500/20"
                   />
                   
@@ -1495,7 +1517,7 @@ const SearchHomeScreen: React.FC = () => {
                       {srcLoading && (
                         <div className="px-4 py-2.5 text-[10px] font-bold text-slate-455 dark:text-slate-550 flex items-center gap-2">
                           <span className="w-3 h-3 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></span>
-                          Searching across India...
+                          {t('searching_india')}
                         </div>
                       )}
                       {!srcLoading && srcSuggestions.map((item, idx) => {
@@ -1528,14 +1550,14 @@ const SearchHomeScreen: React.FC = () => {
                   <MapPin size={14} className="text-red-500" />
                 </div>
                 <div className="ml-3 flex-1 text-left relative">
-                  <label className="block text-[8px] font-extrabold text-slate-455 dark:text-slate-500 uppercase tracking-wider">To</label>
+                  <label className="block text-[8px] font-extrabold text-slate-455 dark:text-slate-500 uppercase tracking-wider">{t('to')}</label>
                   <input 
                     type="text"
                     value={destQuery}
                     onChange={(e) => handleDestInputChange(e.target.value)}
                     onFocus={() => setDestFocused(true)}
                     onBlur={() => setTimeout(() => setDestFocused(false), 200)}
-                    placeholder="Search place, city, or address..."
+                    placeholder={t('search_placeholder')}
                     className="w-full bg-transparent text-xs font-bold text-slate-800 dark:text-slate-200 focus:outline-none py-0.5 border-b border-transparent focus:border-blue-500/20"
                   />
                   
@@ -1545,7 +1567,7 @@ const SearchHomeScreen: React.FC = () => {
                       {destLoading && (
                         <div className="px-4 py-2.5 text-[10px] font-bold text-slate-400 dark:text-slate-550 flex items-center gap-2">
                           <span className="w-3 h-3 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></span>
-                          Searching across India...
+                          {t('searching_india')}
                         </div>
                       )}
                       {!destLoading && destSuggestions.map((item, idx) => {
@@ -1597,10 +1619,10 @@ const SearchHomeScreen: React.FC = () => {
                   onChange={e => setPassengers(Number(e.target.value))}
                   className="w-full bg-transparent text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-none"
                 >
-                  <option value="1" className="dark:bg-[#151824]">1 Guest</option>
-                  <option value="2" className="dark:bg-[#151824]">2 Guests</option>
-                  <option value="3" className="dark:bg-[#151824]">3 Guests</option>
-                  <option value="4" className="dark:bg-[#151824]">4+ Guests</option>
+                  <option value="1" className="dark:bg-[#151824]">1 {t('guest')}</option>
+                  <option value="2" className="dark:bg-[#151824]">2 {t('guests')}</option>
+                  <option value="3" className="dark:bg-[#151824]">3 {t('guests')}</option>
+                  <option value="4" className="dark:bg-[#151824]">4+ {t('guests')}</option>
                 </select>
               </div>
             </div>
@@ -1610,7 +1632,7 @@ const SearchHomeScreen: React.FC = () => {
                 onClick={handleSearch}
                 className="flex-1 py-3 bg-[#0056fb] hover:bg-[#0046d5] text-white font-bold text-xs rounded-xl shadow-md cursor-pointer transition-all"
               >
-                {searched ? 'Change Search' : t('search_options')}
+                {searched ? t('change_search') : t('search_options')}
               </button>
               {searched && (
                 <button 
@@ -1618,7 +1640,7 @@ const SearchHomeScreen: React.FC = () => {
                   className="px-3 py-3 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 font-bold text-xs rounded-xl cursor-pointer transition-all"
                   title="Back to Homepage"
                 >
-                  Home
+                  {t('home')}
                 </button>
               )}
             </div>
@@ -1630,23 +1652,23 @@ const SearchHomeScreen: React.FC = () => {
           <div className="platform-card bg-white dark:bg-[#151824] p-5 rounded-3xl border border-slate-200/80 dark:border-slate-800/80 shadow-md text-xs">
             <div className="flex justify-between items-center mb-4">
               <span className="font-bold text-slate-805 dark:text-slate-200">{t('filter_services')}</span>
-              <button className="text-[10px] font-bold text-[#0056fb] hover:underline">Clear All</button>
+              <button className="text-[10px] font-bold text-[#0056fb] hover:underline">{t('clear_all')}</button>
             </div>
             <div className="space-y-4 text-xs">
               <div className="text-left">
-                <span className="block text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase mb-1.5 ml-1">Sort By</span>
+                <span className="block text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase mb-1.5 ml-1">{t('sort_by')}</span>
                 <select 
                   value={sortKey} 
                   onChange={e => setSortKey(e.target.value as any)}
                   className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs font-bold text-slate-705 dark:text-slate-350 focus:outline-none"
                 >
-                  <option value="recommended">Recommended</option>
-                  <option value="cheapest">Cheapest</option>
-                  <option value="fastest">Fastest</option>
+                  <option value="recommended">{t('recommended')}</option>
+                  <option value="cheapest">{t('cheapest')}</option>
+                  <option value="fastest">{t('fastest')}</option>
                 </select>
               </div>
               <div className="text-left">
-                <span className="block text-[10px] font-extrabold text-slate-400 dark:text-slate-550 uppercase mb-2 ml-1">Price Range</span>
+                <span className="block text-[10px] font-extrabold text-slate-400 dark:text-slate-550 uppercase mb-2 ml-1">{t('price_range')}</span>
                 <input 
                   type="range" 
                   min="0" 
@@ -1660,13 +1682,13 @@ const SearchHomeScreen: React.FC = () => {
                 </div>
               </div>
               <div className="text-left">
-                <span className="block text-[10px] font-extrabold text-slate-405 dark:text-slate-505 uppercase mb-2.5 ml-1">Provider Rating</span>
+                <span className="block text-[10px] font-extrabold text-slate-405 dark:text-slate-505 uppercase mb-2.5 ml-1">{t('provider_rating')}</span>
                 <div className="space-y-2 font-bold text-slate-650 dark:text-slate-400 text-xs">
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input type="checkbox" className="rounded border-slate-300 dark:border-slate-700 accent-[#0056fb]" />
                     <div className="flex items-center text-amber-500 gap-0.5">
                       {[1, 2, 3, 4, 5].map(e => <Star size={11} fill="#f59e0b" className="text-amber-500" key={e} />)}
-                      <span className="ml-1.5 text-slate-500 text-[10px]">& up</span>
+                      <span className="ml-1.5 text-slate-500 text-[10px]">{t('and_up')}</span>
                     </div>
                   </label>
                 </div>
@@ -1684,7 +1706,7 @@ const SearchHomeScreen: React.FC = () => {
             <div>
               <h2 className="text-xl font-extrabold text-slate-808 dark:text-slate-150">{t('all_avail_services')}</h2>
               <p className="text-xs text-slate-400 dark:text-slate-500 font-semibold mt-0.5">
-                Available route options for {locations.find(l => l.id === srcVal)?.name.split(' (')[0]} → {locations.find(l => l.id === destVal)?.name.split(' (')[0]} ({routeDistance || 260} km)
+                {t('available_route_options')} {locations.find(l => l.id === srcVal)?.name.split(' (')[0]} → {locations.find(l => l.id === destVal)?.name.split(' (')[0]} ({routeDistance || 260} km)
               </p>
             </div>
           </div>
@@ -1968,9 +1990,9 @@ const OptionsListScreen: React.FC = () => {
                   onChange={e => setSortKey(e.target.value as any)}
                   className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 font-semibold"
                 >
-                  <option value="recommended">Recommended</option>
-                  <option value="cheapest">Cheapest</option>
-                  <option value="fastest">Fastest</option>
+                  <option value="recommended">{t('recommended')}</option>
+                  <option value="cheapest">{t('cheapest')}</option>
+                  <option value="fastest">{t('fastest')}</option>
                 </select>
               </div>
 
@@ -1994,14 +2016,14 @@ const OptionsListScreen: React.FC = () => {
               {(['all', 'bus', 'cab', 'bike', 'train', 'flight', 'auto'] as const).map(type => {
                 const isActive = filterType === type;
                 let iconElement = <Compass size={14} />;
-                let label = 'All Services';
+                let label = t('all_services');
                 
-                if (type === 'bus') { iconElement = <Bus size={14} />; label = 'Bus'; }
-                else if (type === 'cab') { iconElement = <Car size={14} />; label = 'Cab'; }
-                else if (type === 'bike') { iconElement = <Bike size={14} />; label = 'Bike'; }
-                else if (type === 'train') { iconElement = <Train size={14} />; label = 'Train'; }
-                else if (type === 'flight') { iconElement = <Plane size={14} />; label = 'Flight'; }
-                else if (type === 'auto') { iconElement = <Compass size={14} />; label = 'Auto'; }
+                if (type === 'bus') { iconElement = <Bus size={14} />; label = t('bus'); }
+                else if (type === 'cab') { iconElement = <Car size={14} />; label = t('cab'); }
+                else if (type === 'bike') { iconElement = <Bike size={14} />; label = t('bike'); }
+                else if (type === 'train') { iconElement = <Train size={14} />; label = t('train'); }
+                else if (type === 'flight') { iconElement = <Plane size={14} />; label = t('flight'); }
+                else if (type === 'auto') { iconElement = <Compass size={14} />; label = t('auto'); }
 
                 return (
                   <button

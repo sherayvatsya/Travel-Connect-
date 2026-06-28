@@ -16,31 +16,31 @@ import {
 
 // --- HEADER COMPONENT ---
 export const Header: React.FC = () => {
-  const { currentUser, logout, theme, toggleTheme, currentScreen, setCurrentScreen, language, setLanguage, notifications, markAllNotificationsRead } = useApp();
+  const { currentUser, logout, theme, toggleTheme, currentScreen, setCurrentScreen, language, setLanguage, notifications, markAllNotificationsRead, t } = useApp();
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [showNotificationsDropdown, setShowNotificationsDropdown] = useState(false);
   const [activeMenuTab, setActiveMenuTab] = useState('Home');
 
   const menuItems = [
-    { label: 'Home', screen: 'home' },
-    { label: 'Bookings', screen: 'bookings' }, // maps to bookings history
-    { label: 'Services', screen: 'home' },
-    { label: 'Routes', screen: 'routes' },
-    { label: 'Offers', screen: 'offers' }
+    { key: 'home', screen: 'home' },
+    { key: 'bookings', screen: 'bookings' }, // maps to bookings history
+    { key: 'services', screen: 'home' },
+    { key: 'routes', screen: 'routes' },
+    { key: 'offers', screen: 'offers' }
   ];
 
   // Synchronize active menu tab with screen transitions
   useEffect(() => {
     if (currentScreen === 'home') {
-      if (activeMenuTab !== 'Services') {
-        setActiveMenuTab('Home');
+      if (activeMenuTab !== 'services') {
+        setActiveMenuTab('home');
       }
     } else if (currentScreen === 'bookings') {
-      setActiveMenuTab('Bookings');
+      setActiveMenuTab('bookings');
     } else if (currentScreen === 'routes') {
-      setActiveMenuTab('Routes');
+      setActiveMenuTab('routes');
     } else if (currentScreen === 'offers') {
-      setActiveMenuTab('Offers');
+      setActiveMenuTab('offers');
     } else {
       setActiveMenuTab('');
     }
@@ -64,13 +64,13 @@ export const Header: React.FC = () => {
       {/* Center Navigation Menu */}
       <nav className="hidden lg:flex items-center gap-7">
         {menuItems.map((item, idx) => {
-          const isActive = activeMenuTab === item.label;
+          const isActive = activeMenuTab === item.key;
           return (
             <button
               key={idx}
               onClick={() => {
-                setActiveMenuTab(item.label);
-                if (item.label === 'Services') {
+                setActiveMenuTab(item.key);
+                if (item.key === 'services') {
                   setCurrentScreen('home');
                   setTimeout(() => {
                     const el = document.getElementById('services-grid-section');
@@ -88,7 +88,7 @@ export const Header: React.FC = () => {
                   : 'text-slate-600 hover:text-[#0056fb] dark:text-slate-350 dark:hover:text-white'
               }`}
             >
-              {item.label}
+              {t(item.key)}
               {isActive && (
                 <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#0056fb] rounded-full animate-in fade-in duration-200" />
               )}

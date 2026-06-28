@@ -6,7 +6,7 @@ import { OperatorPortal } from './components/OperatorPortal';
 import { AdminPortal } from './components/AdminPortal';
 
 function MainLayout() {
-  const { theme, activeRole, currentScreen } = useApp();
+  const { theme, activeRole, currentScreen, language } = useApp();
 
   // Dynamically apply dark class to document body
   useEffect(() => {
@@ -16,6 +16,11 @@ function MainLayout() {
       document.body.classList.remove('dark');
     }
   }, [theme]);
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+    document.body.classList.toggle('lang-hi', language === 'hi');
+  }, [language]);
 
   const isFullScreen = ['splash', 'welcome', 'login'].includes(currentScreen);
 

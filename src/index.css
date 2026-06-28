@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @source "./**/*.{ts,tsx}";
@@ -9,9 +10,9 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --color-brand-blue: #0056fb;
-  --color-brand-blue-hover: #0046d5;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --color-brand-blue: #2563eb;
+  --color-brand-blue-hover: #1d4ed8;
   --color-light-bg: #f8fafc;
   --color-dark-bg: #0b0c10;
   
@@ -32,13 +33,17 @@
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
   background-color: #f8fafc;
   color: #1e293b;
   transition: background-color 0.3s, color 0.3s;
+}
+
+body.lang-hi {
+  font-family: 'Noto Sans Devanagari', 'Nirmala UI', Mangal, 'Inter', system-ui, sans-serif;
 }
 
 body.dark {

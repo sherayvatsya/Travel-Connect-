@@ -1,5 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
+const AUTH_SESSION_STORAGE_KEY = 'travelconnect.auth.session';
+const AUTH_SESSION_FALLBACK_KEY = 'travelconnect.auth.session.temp';
+
 // --- TYPES ---
 
 export type Role = 'customer' | 'cab_driver' | 'bus_operator' | 'auto_driver' | 'bike_driver' | 'train_provider' | 'flight_provider' | 'admin';
@@ -265,8 +268,13 @@ const translations = {
     to: "To",
     date: "Date",
     passengers: "Passengers",
+    guest: "Guest",
+    guests: "Guests",
     search_routes: "Search Routes",
+    search_options: "Search Options",
     change_search: "Change Search",
+    search_placeholder: "Search place, city, or address...",
+    searching_india: "Searching across India...",
     all_services: "All Services",
     bus: "Bus",
     cab: "Cab",
@@ -276,7 +284,16 @@ const translations = {
     auto: "Auto",
     shared: "Shared",
     filter_services: "Filter Services",
+    clear_all: "Clear All",
+    sort_by: "Sort By",
+    recommended: "Recommended",
+    cheapest: "Cheapest",
+    fastest: "Fastest",
+    price_range: "Price Range",
+    provider_rating: "Provider Rating",
+    and_up: "& up",
     all_avail_services: "All Available Services",
+    available_route_options: "Available route options for",
     modify_search: "Modify Search",
     connecting_point: "Connecting Point Selected...",
     awaiting_route: "Awaiting route selection...",
@@ -299,7 +316,12 @@ const translations = {
     verify_operator: "Verify Operators",
     support_tickets: "Support Tickets",
     wallet: "Wallet Balance",
-    history: "Booking History"
+    history: "Booking History",
+    home: "Home",
+    bookings: "Bookings",
+    services: "Services",
+    routes: "Routes",
+    offers: "Offers"
   },
   hi: {
     plan_journey: "अपनी यात्रा की योजना बनाएं",
@@ -307,8 +329,13 @@ const translations = {
     to: "कहाँ तक",
     date: "तारीख",
     passengers: "यात्री",
+    guest: "यात्री",
+    guests: "यात्री",
     search_routes: "मार्ग खोजें",
+    search_options: "विकल्प खोजें",
     change_search: "खोज बदलें",
+    search_placeholder: "स्थान, शहर या पता खोजें...",
+    searching_india: "भारत में खोज रहे हैं...",
     all_services: "सभी सेवाएँ",
     bus: "बस",
     cab: "कैब",
@@ -318,7 +345,16 @@ const translations = {
     auto: "ऑटो",
     shared: "साझा कैब",
     filter_services: "सेवाएं फ़िल्टर करें",
+    clear_all: "सभी हटाएं",
+    sort_by: "क्रमबद्ध करें",
+    recommended: "अनुशंसित",
+    cheapest: "सबसे सस्ता",
+    fastest: "सबसे तेज़",
+    price_range: "मूल्य सीमा",
+    provider_rating: "प्रदाता रेटिंग",
+    and_up: "और ऊपर",
     all_avail_services: "सभी उपलब्ध सेवाएँ",
+    available_route_options: "इसके लिए उपलब्ध मार्ग विकल्प",
     modify_search: "खोज में संशोधन करें",
     connecting_point: "कनेक्टिंग पॉइंट चुना गया...",
     awaiting_route: "मार्ग चयन की प्रतीक्षा है...",
@@ -341,7 +377,12 @@ const translations = {
     verify_operator: "ऑपरेटरों को सत्यापित करें",
     support_tickets: "सहायता टिकट",
     wallet: "बटुआ शेष",
-    history: "बुकिंग इतिहास"
+    history: "बुकिंग इतिहास",
+    home: "होम",
+    bookings: "बुकिंग",
+    services: "सेवाएँ",
+    routes: "मार्ग",
+    offers: "ऑफर"
   },
   es: {
     plan_journey: "Planifique su Viaje",
@@ -349,8 +390,13 @@ const translations = {
     to: "Hasta",
     date: "Fecha",
     passengers: "Pasajeros",
+    guest: "Viajero",
+    guests: "Viajeros",
     search_routes: "Buscar Rutas",
+    search_options: "Buscar Opciones",
     change_search: "Cambiar Búsqueda",
+    search_placeholder: "Buscar lugar, ciudad o dirección...",
+    searching_india: "Buscando en India...",
     all_services: "Todos los Servicios",
     bus: "Autobús",
     cab: "Taxi",
@@ -360,7 +406,16 @@ const translations = {
     auto: "Tuk Tuk",
     shared: "Compartido",
     filter_services: "Filtrar Servicios",
+    clear_all: "Limpiar Todo",
+    sort_by: "Ordenar Por",
+    recommended: "Recomendado",
+    cheapest: "Más Barato",
+    fastest: "Más Rápido",
+    price_range: "Rango de Precio",
+    provider_rating: "Valoración del Proveedor",
+    and_up: "y más",
     all_avail_services: "Servicios Disponibles",
+    available_route_options: "Opciones de ruta disponibles para",
     modify_search: "Modificar Búsqueda",
     connecting_point: "Punto de conexión seleccionado...",
     awaiting_route: "Esperando selección de ruta...",
@@ -383,7 +438,12 @@ const translations = {
     verify_operator: "Verificar Operadores",
     support_tickets: "Tickets de Soporte",
     wallet: "Saldo de Cartera",
-    history: "Historial de Reservas"
+    history: "Historial de Reservas",
+    home: "Inicio",
+    bookings: "Reservas",
+    services: "Servicios",
+    routes: "Rutas",
+    offers: "Ofertas"
   }
 };
 
@@ -421,6 +481,45 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [routeOptions, setRouteOptions] = useState<RouteOption[]>([]);
   const [selectedOption, setSelectedOption] = useState<RouteOption | null>(null);
   const [activeBooking, setActiveBooking] = useState<Booking | null>(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const rawSession =
+      window.localStorage.getItem(AUTH_SESSION_STORAGE_KEY) ??
+      window.sessionStorage.getItem(AUTH_SESSION_FALLBACK_KEY);
+
+    if (!rawSession) return;
+
+    try {
+      const session = JSON.parse(rawSession) as {
+        email?: string;
+        role?: Role;
+        expiresAt?: string;
+      };
+
+      if (!session.email || !session.role) return;
+
+      if (session.expiresAt && new Date(session.expiresAt).getTime() < Date.now()) {
+        window.localStorage.removeItem(AUTH_SESSION_STORAGE_KEY);
+        window.sessionStorage.removeItem(AUTH_SESSION_FALLBACK_KEY);
+        return;
+      }
+
+      const existingUser = users.find(
+        (user) =>
+          user.email.toLowerCase() === session.email?.toLowerCase() &&
+          user.role === session.role
+      );
+
+      if (existingUser) {
+        setCurrentUser(existingUser);
+      }
+    } catch {
+      window.localStorage.removeItem(AUTH_SESSION_STORAGE_KEY);
+      window.sessionStorage.removeItem(AUTH_SESSION_FALLBACK_KEY);
+    }
+  }, [users]);
 
   // Sync roles with logged in user
   useEffect(() => {
@@ -493,6 +592,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const logout = () => {
+    if (typeof window !== 'undefined') {
+      window.localStorage.removeItem(AUTH_SESSION_STORAGE_KEY);
+      window.sessionStorage.removeItem(AUTH_SESSION_FALLBACK_KEY);
+    }
     setCurrentUser(null);
     setActiveRole('guest');
     setCurrentScreen('welcome');
